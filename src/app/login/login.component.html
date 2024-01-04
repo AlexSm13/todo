@@ -1,0 +1,29 @@
+<form [formGroup]="form" enctype="multipart/form-data">
+  <div class="header">
+    <mat-icon routerLink="..">arrow_back</mat-icon>
+    <div>Login</div>
+  </div>
+  <mat-form-field class="example-full-width">
+    <mat-label>имя пользователя</mat-label>
+    <input matInput formControlName="username"
+           placeholder="текст">
+    <mat-error *ngIf="form.controls.username.hasError('required')">
+      Поле <strong>обязательно</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>password</mat-label>
+    <input [type]="showPassword ? 'text' : 'password'" matInput formControlName="password"
+           placeholder="текст">
+    <button matSuffix mat-icon-button aria-label="eye" (click)="showPassword = !showPassword">
+      <mat-icon>{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-error *ngIf="form.controls.password.hasError('required')">
+      Поле <strong>обязательно</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-error *ngIf="form.hasError('password')">
+    {{ form.getError('password') }}
+  </mat-error>
+  <button mat-raised-button color="primary" (click)="login()">Login</button>
+</form>

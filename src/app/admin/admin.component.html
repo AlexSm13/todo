@@ -1,0 +1,38 @@
+<div *ngIf="dataSource$ | async as dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource.tasks">
+
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef style="width: 15%"> имя пользователя </th>
+            <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef style="width: 20%"> email </th>
+            <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="text">
+            <th mat-header-cell *matHeaderCellDef> текст задачи </th>
+            <td mat-cell *matCellDef="let row">
+                <div class="input-cell">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <input matInput placeholder="текст" #input [value]="row.text">
+                    </mat-form-field>
+                    <button *ngIf="row.text !== input.value" mat-raised-button (click)="saveNewText(input.value, row.id, row.status)">Save</button>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef style="width: 30%"> статус </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox [checked]="row.completed" (change)="saveStatus($event, row.id, row.status)"></mat-checkbox>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[3]" [length]="dataSource.total_task_count" (page)="handlePageEvent($event)" aria-label="Select page of task"></mat-paginator>
+</div>

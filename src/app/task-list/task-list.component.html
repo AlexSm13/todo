@@ -1,0 +1,63 @@
+<section>
+  <form [formGroup]="form">
+    <mat-form-field class="example-full-width">
+      <mat-label>имя пользователя</mat-label>
+      <input matInput formControlName="username"
+             placeholder="текст">
+      <mat-error *ngIf="form.controls.username.hasError('required')">
+        Поле <strong>обязательно</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>email</mat-label>
+      <input type="email" matInput formControlName="email"
+             placeholder="pat@example.com">
+      <mat-error *ngIf="form.controls.email.hasError('email') && !form.controls.email.hasError('required')">
+        Пожалуйста укажите валидный email
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        Поле <strong>обязательно</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>текст задачи</mat-label>
+      <input matInput formControlName="text"
+             placeholder="текст">
+      <mat-error *ngIf="form.controls.text.hasError('required')">
+        Поле <strong>обязательно</strong>
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="reset" (click)="addTask()">Add</button>
+  </form>
+
+  <div *ngIf="dataSource$ | async as dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource.tasks" matSort (matSortChange)="handleSortEvent($event)">
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%"> имя пользователя </th>
+        <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 20%"> email </th>
+        <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="text">
+        <th mat-header-cell *matHeaderCellDef> текст задачи </th>
+        <td class="text-row" mat-cell *matCellDef="let row"> {{row.text}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 30%"> статус </th>
+        <td mat-cell *matCellDef="let row"> {{STATUS_NAME[row.status]}} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[3]" [length]="dataSource.total_task_count" (page)="handlePageEvent($event)" aria-label="Select page of task"></mat-paginator>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+}
