@@ -5,7 +5,7 @@ const path = require("path");
 const app = express();
 
 // Serve only the static files form the dist directory
-app.use(express.static("./dist/todo"));
+app.use(express.static("./dist/todo/browser"));
 
 app.get("/*", (req, res) => res.sendFile("index.html", { root: "dist/todo/browser/" }));
 
